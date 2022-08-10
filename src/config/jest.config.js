@@ -17,7 +17,11 @@ const ignores = [
 
 const jestConfig = {
   roots: [hasFile('src') ? '<rootDir>/src' : '<rootDir>'],
-  testEnvironment: ifAnyDep(['webpack', 'rollup', 'react', 'preact'], 'jsdom', 'node'),
+  testEnvironment: ifAnyDep(
+    ['webpack', 'rollup', 'react', 'preact'],
+    'jsdom',
+    'node',
+  ),
   testURL: 'http://localhost',
   moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx'],
   modulePaths: ['<rootDir>/src', 'shared', '<rootDir>/tests'],
