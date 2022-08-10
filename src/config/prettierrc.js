@@ -14,7 +14,7 @@ module.exports = {
   requirePragma: false,
   singleQuote: true,
   trailingComma: 'all',
-  jsxBracketSameLine: false,
+  bracketSameLine: false,
   proseWrap: 'always',
   vueIndentScriptAndStyle: false,
 }
