@@ -1,5 +1,5 @@
+/* eslint-disable jest/prefer-snapshot-hint */
 import cases from 'jest-in-case'
-
 import {winPathSerializer} from './helpers/serializers'
 
 expect.addSnapshotSerializer(winPathSerializer)

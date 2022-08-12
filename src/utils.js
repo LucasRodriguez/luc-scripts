@@ -15,6 +15,7 @@ const {packageJson: pkg, path: pkgPath} = readPkgUp.sync({
   cwd: fs.realpathSync(process.cwd()),
 })
 const appDirectory = path.dirname(pkgPath)
+const isEsm = pkg.type === 'module'
 
 function resolveBin(modName, {executable = modName, cwd = process.cwd()} = {}) {
   let pathFromWhich
@@ -248,4 +249,5 @@ module.exports = {
   generateTypeDefs,
   getRollupInputs,
   getRollupOutput,
+  isEsm,
 }

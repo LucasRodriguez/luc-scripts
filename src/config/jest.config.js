@@ -1,5 +1,12 @@
 const path = require('path')
-const {ifAnyDep, hasFile, ifFile, hasPkgProp, fromRoot} = require('../utils')
+const {
+  ifAnyDep,
+  hasFile,
+  ifFile,
+  hasPkgProp,
+  fromRoot,
+  isEsm,
+} = require('../utils')
 
 const here = p => path.join(__dirname, p)
 
@@ -16,16 +23,15 @@ const ignores = [
 ]
 
 const jestConfig = {
-  roots: [fromRoot(hasFile('src') ? 'src' : '')],
-  testEnvironment: ifAnyDep(['webpack', 'rollup', 'react'], 'jsdom', 'node'),
+  roots: [hasFile('src') ? '<rootDir>/src' : '<rootDir>'],
+  testEnvironment: ifAnyDep(
+    ['webpack', 'rollup', 'react', 'preact'],
+    'jsdom',
+    'node',
+  ),
   testURL: 'http://localhost',
   moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx'],
-  moduleDirectories: [
-    'node_modules',
-    fromRoot('src'),
-    'shared',
-    fromRoot('tests'),
-  ],
+  modulePaths: ['<rootDir>/src', 'shared', '<rootDir>/tests'],
   collectCoverageFrom: ['src/**/*.+(js|jsx|ts|tsx)'],
   testMatch: [
     '**/__tests__/**/*.+(js|jsx|ts|tsx)',
@@ -73,6 +79,16 @@ if (useBuiltInBabelConfig) {
   jestConfig.transform = {
     '^.+\\.(js|jsx|ts|tsx)$': here('./babel-transform'),
   }
+}
+
+// make esmodules work
+// https://jestjs.io/docs/ecmascript-modules
+if (isEsm) {
+  // see https://github.com/chalk/chalk/issues/532#issuecomment-1062018375
+  jestConfig.moduleNameMapper = {
+    '#(.*)': '<rootDir>/node_modules/$1',
+  }
+  jestConfig.transform = {}
 }
 
 if (jestConfig.testEnvironment === 'jsdom') {

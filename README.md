@@ -190,6 +190,20 @@ module.exports = {
 > configuring things to make it less magical and more straightforward. Extending
 > can take place on your terms. I think this is actually a great way to do this.
 
+### ES Module Support with jest (`cod-scripts test`)
+
+As of this writing, jest esmodule support is still a [WIP](https://github.com/facebook/jest/issues/12270). If you're testing a nodejs esmodule, you need to pass
+the `--experimental-vm-modules` flag to node. For example:
+
+**package.json**
+```json
+"scripts": {
+  "test": "NODE_OPTIONS=--experimental-vm-modules cod-scripts test"
+}
+```
+
+See: <https://jestjs.io/docs/ecmascript-modules>
+
 ### TypeScript Support
 
 If the `tsconfig.json`-file is present in the project root directory and
