@@ -1,5 +1,12 @@
 const path = require('path')
-const {ifAnyDep, hasFile, ifFile, hasPkgProp, fromRoot} = require('../utils')
+const {
+  ifAnyDep,
+  hasFile,
+  ifFile,
+  hasPkgProp,
+  fromRoot,
+  isEsm,
+} = require('../utils')
 
 const here = p => path.join(__dirname, p)
 
@@ -72,6 +79,16 @@ if (useBuiltInBabelConfig) {
   jestConfig.transform = {
     '^.+\\.(js|jsx|ts|tsx)$': here('./babel-transform'),
   }
+}
+
+// make esmodules work
+// https://jestjs.io/docs/ecmascript-modules
+if (isEsm) {
+  // see https://github.com/chalk/chalk/issues/532#issuecomment-1062018375
+  jestConfig.moduleNameMapper = {
+    '#(.*)': '<rootDir>/node_modules/$1',
+  }
+  jestConfig.transform = {}
 }
 
 if (jestConfig.testEnvironment === 'jsdom') {
