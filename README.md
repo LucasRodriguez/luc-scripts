@@ -1,5 +1,5 @@
 <div align="center">
-<h1>cod-scripts 🛠📦</h1>
+<h1>luc-scripts 🛠📦</h1>
 
 <p>CLI toolbox for common scripts for my projects</p>
 </div>
